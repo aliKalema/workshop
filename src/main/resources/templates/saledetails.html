@@ -1,0 +1,138 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales</title>
+    <link rel="stylesheet" href="/css/sales_styles.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="/webjars/font-awesome/5.15.0/css/all.css">
+</head>
+<body>
+    <div class="side-nav-container" th:style="'background-image:url(' + @{/images/sidebar.jpg} + '); background-repeat: no-repeat; background-position: center; background-size: cover;'">
+        <div class="side-nav-wrapper">
+            <div class="profile-container">
+                <div class="nav-icon-container">
+                    <i class="fas fa-user-alt"></i>
+                    </div>
+                    <div class="nav-text-container" sec:authentication="name">
+                      
+                    </div>
+            </div>
+            <hr>
+            <ul class="nav-items">
+                <li class="nav-item" th:href="@{/admin/dashboard}">
+                    <div class="nav-icon-container">
+                    <a th:href="@{/admin/dashboard}">
+                        <i class="fas fa-th"></i>
+                     </a>
+                    </div>
+                    <div class="nav-text-container">
+                     <a th:href="@{/admin/dashboard}">
+                        Dashboard
+                     </a>
+                    </div>
+                </li>
+                <li class="nav-item" th:href="@{/admin/inventory}">
+                    <div class="nav-icon-container">
+                     <a th:href="@{/admin/inventory}">
+                        <i class="fas fa-cubes"></i>
+                      </a>
+                    </div>
+                    <div class="nav-text-container">
+                     <a th:href="@{/admin/inventory}">
+                       Inventory
+                     </a>
+                    </div>
+                </li>
+                <li class="nav-item" th:href="@{/admin/orders}">
+                    <div class="nav-icon-container">
+                     <a th:href="@{/admin/orders}">
+                    <i class="fas fa-clipboard-list"></i>
+                    </a>
+                    </div>
+                    <div class="nav-text-container">
+                     <a th:href="@{/admin/users}">
+                       Users
+                     </a>
+                    </div>
+                </li>
+                <li class="nav-item" th:href="@{/admin/sales}">
+                    <div class="nav-icon-container">
+                     <a th:href="@{/admin/sales}">
+                        <i class="fas fa-money-check-alt"></i>
+                        </a>
+                    </div>
+                    <div class="nav-text-container">
+                     <a th:href="@{/admin/sales}">
+                       Sales
+                     </a>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+   <div class="section-container">
+          <div class="upper-nav">
+             <div class="logo-container">
+                <div class="logo">
+                  <img th:src="@{/images/sunshine stores.png}" alt="logo" class="logo-img">
+                </div>
+                  <div class="logo-text">
+                    Sunshine<br>Stores
+                  </div>
+              </div>
+            
+            <div class="nav-button-group">
+             <form  name= "f" th:action="@{/logout}" method="post">
+             <button type="submit" id="logout-btn" class="logout-btn">logout</button>
+             </form>
+            </div>
+          </div>
+          <div class="main-section-container">
+          <div class="main-wrapper">
+            <div class="individual-sale-container">
+             <div class="individual-item">
+              <div class="individual-label">ID</div>
+              <div class="individual-value" th:text="${sale.id}"></div>
+             </div>
+             <div class="individual-item">
+              <div class="individual-label">Customer Name</div>
+              <div class="individual-value" th:text="${sale.customerName}"></div>
+             </div>
+             <div class="individual-item">
+              <div class="individual-label">Picked</div>
+              <div class="individual-value" th:text="${sale.pickedup}"></div>
+             </div>
+             <div class="individual-item">
+              <div class="individual-label">Total</div>
+              <div class="individual-value" th:text="${sale.total}"></div>
+             </div>
+             <div class="individual-item">
+              <div class="individual-label">ordered Date</div>
+              <div class="individual-value" th:text="${sale.orderDate}"></div>
+             </div>
+             <div class="individual-item">
+              <div class="individual-label">Cashier</div>
+              <div class="individual-value" th:text="${sale.admin}"></div>
+             </div>
+             </div>
+             <div class="individual-stock-table">
+              <table>
+              <tr>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>quantity</th>
+              </tr>
+              <tr th:each="stck:${stock}">
+                <td th:text="${stck.productName}"></td>
+                <td th:text="${stck.price}"></td>
+                <td th:text="${stck.quantity}"></td>
+              </tr>
+              </table>
+             </div>
+            </div>
+          </div>
+    </div>
+</body>
+</html>

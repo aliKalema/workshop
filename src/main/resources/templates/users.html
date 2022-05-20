@@ -1,0 +1,547 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+    <link rel="stylesheet"  href="/css/users_styles.css" type="text/css">
+   <link rel="stylesheet" type="text/css" href="/webjars/font-awesome/5.15.0/css/all.css">
+</head>
+<body>
+    
+    <div class="side-nav-container" th:style="'background-image:url(' + @{/images/sidebar.jpg} + '); background-repeat: no-repeat; background-position: center; background-size: cover;'">
+        <div class="side-nav-wrapper">
+            <div class="profile-container">
+                <div class="nav-icon-container">
+                    <i class="fas fa-user-alt"></i>
+                    </div>
+                    <div class="nav-text-container" sec:authentication="name">
+                    </div>
+            </div>
+            <hr>
+            <ul class="nav-items">
+                <li class="nav-item" th:href="@{/admin/dashboard}">
+                    <div class="nav-icon-container">
+                    <a th:href="@{/admin/dashboard}">
+                        <i class="fas fa-th"></i>
+                     </a>
+                    </div>
+                    <div class="nav-text-container">
+                     <a th:href="@{/admin/dashboard}">
+                        Dashboard
+                     </a>
+                    </div>
+                </li>
+                <li class="nav-item" th:href="@{/admin/inventory}">
+                    <div class="nav-icon-container">
+                     <a th:href="@{/admin/inventory}">
+                        <i class="fas fa-cubes"></i>
+                      </a>
+                    </div>
+                    <div class="nav-text-container">
+                     <a th:href="@{/admin/inventory}">
+                       Inventory
+                     </a>
+                    </div>
+                </li>
+                <li class="nav-item" th:href="@{/admin/orders}">
+                    <div class="nav-icon-container">
+                     <a th:href="@{/admin/orders}">
+                    <i class="fas fa-clipboard-list"></i>
+                    </a>
+                    </div>
+                    <div class="nav-text-container">
+                     <a th:href="@{/admin/userss}">
+                      Users
+                     </a>
+                    </div>
+                </li>
+                <li class="nav-item" th:href="@{/admin/sales}">
+                    <div class="nav-icon-container">
+                     <a th:href="@{/admin/sales}">
+                        <i class="fas fa-money-check-alt"></i>
+                        </a>
+                    </div>
+                    <div class="nav-text-container">
+                     <a th:href="@{/admin/sales}">
+                       Sales
+                     </a>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <div class="section-container">
+          <div class="upper-nav">
+             <div class="logo-container">
+                <div class="logo">
+                  <img th:src="@{/images/sunshine stores.png}" alt="logo" class="logo-img">
+                </div>
+                  <div class="logo-text">
+                    Sunshine<br>Stores
+                  </div>
+              </div>
+            
+            <div class="nav-button-group">
+             <form  name= "f" th:action="@{/logout}" method="post">
+             <button type="submit" id="logout-btn" class="logout-btn">logout</button>
+             </form>
+            </div>
+          </div>
+          <div class="main-section-container">
+          
+          <div class= "manager-container" sec:authorize="hasRole('ROLE_MANAGER')">
+          <div class= "container-header">
+          <div class="header">
+          Manager
+          </div>
+          <div class="btn-container">
+          <button id="manager-btn" class="user-btn">+ &nbsp;Manager</button>
+          </div>
+          </div>
+           <table>
+              <tr>
+                 <th>ID</th>
+                 <th>Name</th>
+                 <th>Phone</th>
+                 <th>email</th>
+                 <th></th>
+                 <th></th>
+               </tr> 
+               <tr th:each="man :${managers}">
+               <td th:text="${man.id}"></td>
+               <td th:text="${man.username}"></td>
+               <td th:text="${man.phone}"></td>
+                <td th:text="${man.email}"></td>
+               <td class="delete-btn"><i class="far fa-trash-alt delete"></i></td>
+               <td class="edit-btn"><i class="fas fa-pencil-alt edit"></i></td>
+               </tr>
+            </table>
+          </div>
+          
+          <div class="admin-container" sec:authorize="hasRole('ROLE_MANAGER')">
+          <div class= "container-header">
+          <div class="header">
+          Admin
+          </div>
+          <div class="btn-container">
+          <button id="admin-btn" class="user-btn">+ &nbsp;Admin</button>
+          </div>
+          </div>
+           <table>
+              <tr>
+                 <th>ID</th>
+                 <th>Name</th>
+                 <th>Phone</th>
+                 <th>email</th>
+                 <th></th>
+                 <th></th>
+               </tr> 
+               <tr th:each="adm :${admins}">
+               <td th:text="${adm.id}"></td>
+               <td th:text="${adm.username}"></td>
+               <td th:text="${adm.phone}"></td>
+               <td th:text="${adm.email}"></td>
+               <td class="delete-btn"><i class="far fa-trash-alt delete"></i></td >
+               <td class="edit-btn"><i class="fas fa-pencil-alt edit"></i></td>
+               </tr>
+            </table>
+          </div>
+          
+          <div class= "users-container" style="padding-bottom:50px;">
+          <div class= "container-header">
+          <div class="header">
+          User
+          </div>
+          <div class="btn-container">
+          <button id="user-btn" class="user-btn">+ &nbsp;User</button>
+          </div>
+          </div>
+          <table>
+              <tr>
+                 <th>ID</th>
+                 <th>Name</th>
+                 <th>Phone</th>
+                 <th>email</th>
+               </tr> 
+               <tr th:each="user :${users}">
+               <td th:text="${user.id}"></td>
+               <td th:text="${user.username}"></td>
+               <td th:text="${user.phone}"></td>
+                <td th:text="${user.email}"></td>
+               </tr>
+            </table>
+          </div>
+          </div>
+          
+    <div id="manager-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header" id="manager-X">
+        <span class="close">&times;</span>
+        Add Manager
+      </div>
+      <div class="modal-body">
+      <form name="f" id="addManager"class="product-form">
+                          <div class="form-division">
+                                  <input type="text" class="input" autocomplete="off" id="Musername" name="Musername" required/>
+                                  <label for="name" class="label-name">
+                                      <span class="content-name">Username</span>
+                                  </label>
+                           </div>
+                           <div class="form-division">
+                                  <input type="password" class="input" autocomplete="off" id="Mpassword" name="Mpassword" required/>
+                                  <label for="name" class="label-name">
+                                      <span class="content-name">Password</span>
+                                  </label>
+                           </div>
+                           <div class="form-division">
+                                  <input type="number" class="input" autocomplete="off" id="Mphone" name="Mphone" required/>
+                                  <label for="name" class="label-name">
+                                      <span class="content-name">Phone</span>
+                                  </label>
+                           </div>
+                           <div class="form-division">
+                            <input type="text" class="input" autocomplete="off" id="Memail" name="Memail" required/>
+                            <label for="name" class="label-name">
+                                <span class="content-name">Email</span>
+                            </label>
+                         </div>
+                         <div class="form-buttons">
+                           <button  id="add-manager-btn" class="enter-btn">ADD</button>
+                         </div>
+                         </form>
+            </div>
+           </div>
+          </div>
+          
+    <div id="admin-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header" id="admin-X">
+        <span class="close">&times;</span>
+        Add Admin
+      </div>
+      <div class="modal-body">
+      <form name="f" id="addAdmin"class="product-form">
+                          <div class="form-division">
+                                  <input type="text" class="input" autocomplete="off" id="Ausername" name="Ausername" required/>
+                                  <label for="name" class="label-name">
+                                      <span class="content-name">Username</span>
+                                  </label>
+                           </div>
+                           <div class="form-division">
+                                  <input type="password" class="input" autocomplete="off" id="Apassword" name="Apassword" required/>
+                                  <label for="name" class="label-name">
+                                      <span class="content-name">Password</span>
+                                  </label>
+                           </div>
+                           <div class="form-division">
+                                  <input type="number" class="input" autocomplete="off" id="Aphone" name="Aphone" required/>
+                                  <label for="name" class="label-name">
+                                      <span class="content-name">Phone</span>
+                                  </label>
+                           </div>
+                           <div class="form-division">
+                            <input type="text" class="input" autocomplete="off" id="Aemail" name="Aemail" required/>
+                            <label for="name" class="label-name">
+                                <span class="content-name">Email</span>
+                            </label>
+                         </div>
+                         <div class="form-buttons">
+                           <button  id="add-admin-btn" class="enter-btn">ADD</button>
+                         </div>
+                         </form>
+            </div>
+           </div>
+          </div>
+          
+    <div id="user-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header" id="user-X">
+        <span class="close">&times;</span>
+        Add User
+      </div>
+      <div class="modal-body">
+      <form name="f" id="addUser"class="product-form">
+                          <div class="form-division">
+                                  <input type="text" class="input" autocomplete="off" id="Uusername" name="Uusername" required/>
+                                  <label for="name" class="label-name">
+                                      <span class="content-name">Username</span>
+                                  </label>
+                           </div>
+                           <div class="form-division">
+                                  <input type="password" class="input" autocomplete="off" id="Upassword" name="Upassword" required/>
+                                  <label for="name" class="label-name">
+                                      <span class="content-name">Password</span>
+                                  </label>
+                           </div>
+                           <div class="form-division">
+                                  <input type="number" class="input" autocomplete="off" id="Uphone" name="Uphone" required/>
+                                  <label for="name" class="label-name">
+                                      <span class="content-name">Phone</span>
+                                  </label>
+                           </div>
+                           <div class="form-division">
+                            <input type="text" class="input" autocomplete="off" id="Uemail" name="Uemail" required/>
+                            <label for="name" class="label-name">
+                                <span class="content-name">Email</span>
+                            </label>
+                         </div>
+                         <div class="form-buttons">
+                           <button  id="add-user-btn" class="enter-btn">ADD</button>
+                         </div>
+                         </form>
+            </div>
+           </div>
+          </div>
+          
+    <div id="edit-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header" id="edit-X">
+        <span class="close">&times;</span>
+        Edit User
+      </div>
+      <div class="modal-body">
+      <form name="f" id="editUser"class="product-form">
+                          <div class="form-division">
+                                  <input type="text" class="input" autocomplete="off" id="Eusername" name="Eusername" required/>
+                                  <label for="name" class="label-name">
+                                      <span class="content-name">Username</span>
+                                  </label>
+                           </div>
+                           <div class="form-division">
+                                  <input type="number" class="input" autocomplete="off" id="Ephone" name="Ephone" required/>
+                                  <label for="name" class="label-name">
+                                      <span class="content-name">Phone</span>
+                                  </label>
+                           </div>
+                           <div class="form-division">
+                            <input type="text" class="input" autocomplete="off" id="Eemail" name="Eemail" required/>
+                            <label for="name" class="label-name">
+                                <span class="content-name">Email</span>
+                            </label>
+                         </div>
+                         <div class="form-buttons">
+                           <button  id="edit-user-btn" class="enter-btn">Edit</button>
+                         </div>
+                         </form>
+            </div>
+           </div>
+          </div>
+          
+    <div id="delete-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header" id="delete-X">
+        <span class="close">&times;</span>
+        Alert
+      </div>
+      <div class="modal-body">
+       <div class="alert-text">
+       <div class="alert-icon">
+       <i class="fas fa-exclamation-circle"></i>
+       </div>
+       <div class="alert-txt">Are You Sure You Want To Delete Product</div>
+      </div>
+      <div class="form-buttons">
+        <button  id="delete-user-btn" >Yes</button>
+      </div>
+    </div>
+  </div>
+   </div>
+          
+    </div>
+
+</body>
+<script>
+window.addEventListener('click', outsideClick);
+userBtn = document.getElementById('user-btn');
+userModal = document.getElementById('user-modal');
+userBtn.addEventListener('click', openUserModal);
+document.getElementById('add-user-btn').addEventListener('click', addUser);
+document.getElementById('user-X').addEventListener('click', closeUserModal);
+function openUserModal(){
+	userModal.style.display ='block';
+}
+function closeUserModal() {
+	  document.getElementById('Uusername').value = '';
+	  document.getElementById('Upassword').value = '';
+	  document.getElementById('Uemail').value = '';
+	  document.getElementById('Uphone').value = '';
+	  userModal.style.display = 'none';
+}
+function addUser(){
+	let username = document.getElementById("Uusername").value;
+	let password = document.getElementById("Upassword").value;
+	let email = document.getElementById("Uemail").value;
+	let enabled = true;
+	let phone = Number(document.getElementById("Uphone").value);
+	let roles = null;
+	fetch("/manager/user/add/uss/",{
+		method:"POST",
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-type':'application/json'
+          },
+          body:JSON.stringify({username:username, password:password, email:email, phone:phone, enabled:enabled})
+	})
+	  .then((res) => res.text())
+      .then((data) => alert(data));
+}
+managerBtn = document.getElementById('manager-btn');
+managerModal = document.getElementById('manager-modal');
+managerBtn.addEventListener('click', openManagerModal);
+document.getElementById('add-manager-btn').addEventListener('click', addManager);
+document.getElementById('manager-X').addEventListener('click', closeManagerModal);
+function openManagerModal(){
+	managerModal.style.display ='block';
+}
+function closeManagerModal() {
+	  document.getElementById('Musername').value = '';
+	  document.getElementById('Mpassword').value = '';
+	  document.getElementById('Memail').value = '';
+	  document.getElementById('Mphone').value = '';
+	  managerModal.style.display = 'none';
+}
+function addManager(){
+	let username = document.getElementById("Musername").value;
+	let password = document.getElementById("Mpassword").value;
+	let email = document.getElementById("Memail").value;
+	let enabled = true;
+	let phone = Number(document.getElementById("Mphone").value);
+	let roles = null;
+	fetch("/manager/user/addm",{
+		method:"POST",
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-type':'application/json'
+          },
+          body:JSON.stringify({username:username, password:password, email:email, phone:phone, enabled:enabled})
+	})
+	  .then((res) => res.text())
+      .then((data) => alert(data));
+}
+adminBtn = document.getElementById('admin-btn');
+adminModal = document.getElementById('admin-modal');
+adminBtn.addEventListener('click', openAdminModal);
+document.getElementById('add-admin-btn').addEventListener('click', addAdmin);
+document.getElementById('admin-X').addEventListener('click', closeAdminModal);
+function openAdminModal(){
+	adminModal.style.display ='block';
+}
+function closeAdminModal() {
+	  document.getElementById('Ausername').value = '';
+	  document.getElementById('Apassword').value = '';
+	  document.getElementById('Aemail').value = '';
+	  document.getElementById('Aphone').value = '';
+	  adminModal.style.display = 'none';
+}
+function addAdmin(){
+	let username = document.getElementById("Ausername").value;
+	let password = document.getElementById("Apassword").value;
+	let email = document.getElementById("Aemail").value;
+	let enabled = true;
+	let phone = Number(document.getElementById("Aphone").value);
+	let roles = null;
+	fetch("/manager/user/add/usd",{
+		method:"POST",
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-type':'application/json'
+          },
+          body:JSON.stringify({username:username, password:password, email:email, phone:phone, enabled:enabled})
+	})
+	  .then((res) => res.text())
+      .then((data) => alert(data));
+}
+const editBtn = document.getElementsByClassName('edit');
+editModal = document.getElementById('edit-modal');
+document.getElementById('add-admin-btn').addEventListener('click', addAdmin);
+document.getElementById('edit-X').addEventListener('click', closeEditModal);
+document.getElementById('edit-user-btn').addEventListener('click', editUser);
+let id= '';
+for(let i=0;i<editBtn.length;i++){
+	editBtn[i].addEventListener('click' , openEditModal);
+}
+function openEditModal(e){
+	const parent =e.target.parentNode.parentNode.children;
+	const product = parent[0];
+	id = parent[0].innerText;
+	document.getElementById("Eusername").value= parent[1].innerText;
+	document.getElementById("Eemail").value= parent[3].innerText;
+	document.getElementById("Ephone").value = parent[2].innerText;
+	editModal.style.display = 'block';
+}
+function editUser(e){
+	e.preventDefault();
+	let username = document.getElementById("Eusername").value;
+	let email = document.getElementById("Eemail").value;
+	let phone = document.getElementById("Ephone").value;
+	const url = `/manager/user/edit/${id}`;
+	fetch(url,{
+		method:"POST",
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-type':'application/json'
+          },
+          body:JSON.stringify({username:username, email:email, phone:phone,})
+	})
+	  .then((res) => res.text())
+      .then((data) => alert(data))
+      .then((data)=>closeEditModal());
+}
+function closeEditModal(){
+	document.getElementById('Eusername').value ='';
+	document.getElementById('Ephone').value ='';
+	document.getElementById('Eemail').value ='';
+	editModal.style.display ='none';
+}
+const deleteBtn = document.getElementsByClassName('delete');
+deleteModal = document.getElementById('delete-modal');
+document.getElementById('delete-X').addEventListener('click', closeDeleteModal);
+document.getElementById('delete-user-btn').addEventListener('click', deleteUser);
+for(let i=0;i<deleteBtn.length;i++){
+	deleteBtn[i].addEventListener('click' , openDeleteModal);
+}
+function openDeleteModal(e){
+	const parent =e.target.parentNode.parentNode.children;
+	const product = parent[0];
+	id = parent[0].innerText;
+	deleteModal.style.display = 'block';
+}
+function deleteUser(e){
+	e.preventDefault();
+	const url = `/manager/user/del/${id}`;
+	fetch(url)
+	  .then((res) => res.text())
+      .then((data) => alert(data))
+      .then((data)=>closeDeleteModal());
+}
+function closeDeleteModal(){
+	deleteModal.style.display ='none';
+}
+function outsideClick(e) {
+	  if (e.target == userModal) {
+	    userModal.style.display = 'none';
+	  }
+	  if (e.target == managerModal) {
+		    managerModal.style.display = 'none';
+		  }
+	  if (e.target == adminModal) {
+		    adminModal.style.display = 'none';
+		  }
+	  if (e.target == editModal) {
+		    editModal.style.display = 'none';
+		  }
+	  if (e.target == deleteModal) {
+		    deleteModal.style.display = 'none';
+		  }
+	}
+</script>
+</html>
+
+
+
+
+
+

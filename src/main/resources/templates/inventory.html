@@ -1,0 +1,597 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory</title>
+    <link rel="stylesheet"  href="/css/inventory_styles.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="/webjars/font-awesome/5.15.0/css/all.css">
+</head>
+<body>
+    <div class="side-nav-container" th:style="'background-image:url(' + @{/images/sidebar.jpg} + ');  background-position: center; background-size: cover;'">
+        <div class="side-nav-wrapper">
+            <div class="profile-container">
+                <div class="nav-icon-container">
+                    <i class="fas fa-user-alt"></i>
+                    </div>
+                    <div class="nav-text-container" sec:authentication="name">
+                       
+                    </div>
+            </div>
+            <hr>
+            <ul class="nav-items">
+                <li class="nav-item" th:href="@{/admin/dashboard}">
+                    <div class="nav-icon-container">
+                    <a th:href="@{/admin/dashboard}">
+                        <i class="fas fa-th"></i>
+                     </a>
+                    </div>
+                    <div class="nav-text-container">
+                     <a th:href="@{/admin/dashboard}">
+                        Dashboard
+                     </a>
+                    </div>
+                </li>
+                <li class="nav-item" th:href="@{/admin/inventory}">
+                    <div class="nav-icon-container">
+                     <a th:href="@{/admin/inventory}">
+                        <i class="fas fa-cubes"></i>
+                      </a>
+                    </div>
+                    <div class="nav-text-container">
+                     <a th:href="@{/admin/inventory}">
+                       Inventory
+                     </a>
+                    </div>
+                </li>
+                <li class="nav-item" th:href="@{/admin/orders}">
+                    <div class="nav-icon-container">
+                     <a th:href="@{/admin/orders}">
+                    <i class="fas fa-clipboard-list"></i>
+                    </a>
+                    </div>
+                    <div class="nav-text-container">
+                     <a th:href="@{/admin/users}">
+                       Users
+                     </a>
+                    </div>
+                </li>
+                <li class="nav-item" th:href="@{/admin/sales}">
+                    <div class="nav-icon-container">
+                     <a th:href="@{/admin/sales}">
+                        <i class="fas fa-money-check-alt"></i>
+                        </a>
+                    </div>
+                    <div class="nav-text-container">
+                     <a th:href="@{/admin/sales}">
+                       Sales
+                     </a>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+        <div class="section-container">
+          <div class="upper-nav">
+             <div class="logo-container">
+                <div class="logo">
+                  <img th:src="@{/images/sunshine stores.png}" alt="logo" class="logo-img">
+                </div>
+                  <div class="logo-text">
+                    Sunshine<br>Stores
+                  </div>
+              </div>
+            
+            <div class="nav-button-group">
+             <form  name= "f" th:action="@{/logout}" method="post">
+             <button type="submit" id="logout-btn" class="logout-btn">logout</button>
+             </form>
+            </div>
+          </div>
+        <div class="main-section-container">
+         <div class="middle-container">
+         <div class="middle-button-group">
+             <button id="modal-btn" class="product-btn" sec:authorize="hasRole('ROLE_MANAGER')">+ &nbsp;product</button>
+             <button id="add-stock" class="stock-btn">+ &nbsp;stock</button>
+           </div>
+           <div class= "search-container">
+              <div class="search-wrapper">
+              <input type="text" autocomplete ="off"  placeholder="search product" id="search">
+              </div>
+              <div class="search-btn">
+              <div class="btn-search"> <i class="fas fa-search"></i> </div>
+              </div>
+           </div>
+           
+        </div>
+          <div class ="inventory-container" sec:authorize="hasRole('ROLE_MANAGER')">
+            <div class="product-categories-container">
+             <div class="category-chart">
+                  <canvas id="chart-cat" style="width:100%"></canvas>    
+              </div>
+               <div class="categories-container" id ="product-categories">
+                   <ul class="category-items">
+                   <li class= "category-item" id="interior">
+                    <div class="color-code1"></div>
+                    <div class="cat-name">Interior</div>
+                    <div class="cat-quantity" id="iq"></div>
+                    <div class="cat-Percentage" id="ip"></div>
+                   </li>
+                   <li class= "category-item" id="exterior">
+                   <div class="color-code2"></div>
+                    <div class="cat-name">Exterior</div>
+                    <div class="cat-quantity" id="xq"></div>
+                    <div class="cat-Percentage" id="xp"></div>
+                   </li>
+                   <li class= "category-item" id="tires">
+                   <div class="color-code3"></div>
+                    <div class="cat-name">Tires</div>
+                    <div class="cat-quantity" id="sq"></div>
+                    <div class="cat-Percentage" id="sp"></div>
+                   </li>
+                   <li class= "category-item" id="replacement">
+                   <div class="color-code4"></div>
+                    <div class="cat-name">Replacement</div>
+                    <div class="cat-quantity" id="rq"></div>
+                    <div class="cat-Percentage" id="rp"></div>
+                   </li>
+                   <li class= "category-item" id="tools">
+                   <div class="color-code5"></div>
+                    <div class="cat-name">Tools</div>
+                    <div class="cat-quantity" id="tq"></div>
+                    <div class="cat-Percentage" id="tp"></div>
+                   </li>
+                   <li class= "category-item" id="motocycle">
+                   <div class="color-code6"></div>
+                    <div class="cat-name" id="mn">Motocycle</div>
+                    <div class="cat-quantity" id="mq"></div>
+                    <div class="cat-Percentage" id="mp"></div>
+                   </li>
+                   <li class= "category-item" id="oils">
+                   <div class="color-code7"></div>
+                    <div class="cat-name" id="on">Oils</div>
+                    <div class="cat-quantity" id='oq'></div>
+                    <div class="cat-Percentage" id="op"></div>
+                   </li>
+                   <li class= "category-item" id="performance">
+                   <div class="color-code8"></div>
+                    <div class="cat-name" id="pn">Performance</div>
+                    <div class="cat-quantity" id="pq"></div>
+                    <div class="cat-Percentage" id="pp"></div>
+                   </li>
+                   </ul>
+               </div>
+            </div>
+            <div class="product-summary-container">
+            <div class="product-summary-header">Inventory Summary</div>
+                <div class="product-summary-wrapper">
+                <div class="product-summary-division">
+                 <div class="product-label">
+                  Quantity: 
+                 </div>
+                 <div class="product-value" th:text="${inventory.quantity}">
+                 </div>
+                </div>
+                <div class="product-summary-division">
+                 <div class="product-label">
+                  Worth: 
+                 </div>
+                 <div class="product-value"  th:text="${inventory.worth}">
+                 </div>
+                </div>
+                
+                </div>
+            </div>
+            </div>
+            <div class="all-products-container">
+            <table>
+            <tr>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th sec:authorize="hasRole('ROLE_MANAGER')"></th>
+              <th sec:authorize="hasRole('ROLE_MANAGER')"></th>
+            </tr>
+            <tr th:each="product :${products}">
+               <td th:text="${product.id}"></td>
+               <td th:text="${product.name}"></td>
+               <td th:text="${product.price}"></td>
+               <td th:text="${product.quantity}"></td>
+               <td sec:authorize="hasRole('ROLE_MANAGER')"> <i class="fas fa-pencil-alt edit"></i></td>
+               <td sec:authorize="hasRole('ROLE_MANAGER')"><i class="far fa-trash-alt delete"></i></td>
+            </tr>
+            </table>
+            </div>
+        <div id="my-modal" class="modal">
+            <div class="modal-content">
+              <div class="modal-header">
+                <span class="close">&times;</span>
+                
+                <div class="header-text">Add Products</div>
+              </div>
+              <div class="modal-body">
+                <form name="f" id="addProduct"class="product-form">
+                          <div class="form-division">
+                                  <input type="text" class="input" autocomplete="off" id="name" name="name" required/>
+                                  <label for="name" class="label-name">
+                                      <span class="content-name">Name</span>
+                                  </label>
+                          </div>
+                          <div class="form-division">
+                            <input type="number" class="input" autocomplete="off" id="price" name="price" required/>
+                            <label for="name" class="label-name">
+                                <span class="content-name">Price</span>
+                            </label>
+                         </div>
+                         <div class="form-division">
+                            <input type="text" class="input" autocomplete="off" id="image" name="image" required/>
+                            <label for="name" class="label-name">
+                                <span class="content-name">Image</span>
+                            </label>
+                          </div>
+                          <div class="form-division">
+                            <input type="text" class="input" autocomplete="off" id="category" name="category" required/>
+                            <label for="name" class="label-name">
+                                <span class="content-name">Category</span>
+                            </label>
+                          </div>
+                          <div class="form-division">
+                            <input type="number" class="input" autocomplete="off" id="quantity" name="quantity" required/>
+                            <label for="name" class="label-name">
+                                <span class="content-name">Quantity</span>
+                            </label>
+                         </div>
+                         <div class="form-division">
+                         <textarea  name="description" id="description" placeholder="add product description"></textarea>
+                         </div>
+                         <div class="form-buttons">
+                             <input type="submit" value="submit" class="enter-btn">
+                             <button class="cancel-btn">Cancel</button>
+                         </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          
+    <div id="delete-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header" id="delete-X">
+        <span class="close">&times;</span>
+        Alert
+      </div>
+      <div class="modal-body">
+       <div class="alert-text">
+       <div class="alert-icon">
+       <i class="fas fa-exclamation-circle"></i>
+       </div>
+       <div class="alert-txt">Are You Sure You Want To Delete Product</div>
+      </div>
+      <div class="form-buttons">
+        <button  id="delete-user-btn" >Yes</button>
+      </div>
+    </div>
+  </div>
+   </div>
+   
+    <div id="stock-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header" id="stock-X">
+        <span class="close">&times;</span>
+        Add Stock
+      </div>
+      <div class="modal-body">
+      <form name="f" id="addStock"class="product-form">
+                          <div class="form-division">
+                                  <input type="text" class="input" autocomplete="off" id="stock-name" name="stock-name" required/>
+                                  <label for="name" class="label-name">
+                                      <span class="content-name">Name</span>
+                                  </label>
+                           </div>
+                           <div class="form-division">
+                            <input type="number" class="input" autocomplete="off" id="stock-quantity" name="stock-quantity" required/>
+                            <label for="name" class="label-name">
+                                <span class="content-name">Quantity</span>
+                            </label>
+                         </div>
+                         <div class="form-buttons">
+                           <button  id="add-stock-btn" class="enter-btn">Add</button>
+                         </div>
+                         </form>
+            </div>
+           </div>
+          </div>
+          
+    
+          
+    <div id="edit-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header" id="edit-X">
+        <span class="close">&times;</span>
+        Edit User
+      </div>
+      <div class="modal-body">
+      <form name="f" id="editUser"class="product-form">
+                         <div class="form-division">
+                                  <input type="text" class="input" autocomplete="off" id="update-name" name="update-name" required/>
+                                  <label for="name" class="label-name">
+                                      <span class="content-name">Name</span>
+                                  </label>
+                           </div>
+                           <div class="form-division">
+                            <input type="number" class="input" autocomplete="off" id="update-price" name="update-price" required/>
+                            <label for="name" class="label-name">
+                                <span class="content-name">Price</span>
+                            </label>
+                         </div>
+                         <div class="form-buttons">
+                           <button  id="edit-user-btn" class="enter-btn">Edit</button>
+                         </div>
+                         </form>
+            </div>
+           </div>
+          </div>
+          
+   </div>
+</div>
+</body>
+<script type="text/javascript" th:src="@{/js/Chart.js}"></script>
+<script>
+const modal = document.querySelector('#my-modal');
+const stockModal = document.getElementById('stock-modal');
+const modalBtn = document.querySelector('#modal-btn');
+const closeBtn = document.querySelector('.close');
+document.getElementById('addProduct').addEventListener('submit', addProduct);
+document.getElementById('add-stock').addEventListener('click' , openStockModal);
+document.getElementById('add-stock-btn').addEventListener('click',reflectStock);
+document.getElementById('stock-X').addEventListener('click' , closeStockModal);
+function reflectStock(e){
+	e.preventDefault();
+	const productName= document.getElementById('stock-name').value;
+	const quantity= document.getElementById('stock-quantity').value;
+	fetch('/admin/stock/add', {
+	      method:'POST',
+	      headers: {
+	        'Accept': 'application/json, text/plain, */*',
+	        'Content-type':'application/json'
+	      },
+	      body:JSON.stringify({productName:productName, quantity:Number(quantity)})
+	    })
+	    .then((res) => res.text())
+	    .then((data) => alert(data))
+	    .then(closeStockModal())
+}
+let interior = 0;
+let exterior=0;
+let replacement=0; 
+let oils =0;
+let tires = 0 ;
+let motocycle = 0;
+let performance = 0;
+let tools = 0;
+getCategoryQuantity();
+// Events
+modalBtn.addEventListener('click', openModal);
+closeBtn.addEventListener('click', clearAllInputs);
+window.addEventListener('click', outsideClick);
+
+// Open
+function openModal() {
+  modal.style.display = 'block';
+}
+function openStockModal(){
+	stockModal.style.display ='block';
+}
+
+// Close
+function closeModal() {
+  modal.style.display = 'none';
+}
+function closeStockModal(){
+	document.getElementById('stock-name').value='';
+	document.getElementById('stock-quantity').value='';
+	stockModal.style.display ='none';
+}
+
+function clearAllInputs(){
+    document.getElementById('name').value = "";
+    document.getElementById('image').value="";
+    document.getElementById('price').value="";
+    document.getElementById('description').value="";
+    document.getElementById('category').value="";
+    document.getElementById('quantity').value="";
+    closeModal();
+}
+const editBtn = document.getElementsByClassName('edit');
+editModal = document.getElementById('edit-modal');
+document.getElementById('edit-X').addEventListener('click', closeEditModal);
+document.getElementById('edit-user-btn').addEventListener('click', editUser);
+let ProdId= '';
+for(let i=0;i<editBtn.length;i++){
+	editBtn[i].addEventListener('click' , openEditModal);
+}
+function openEditModal(e){
+	const parent =e.target.parentNode.parentNode.children;
+	const product = parent[0];
+	ProdId = parent[0].innerText;
+	document.getElementById("update-name").value= parent[1].innerText;
+	document.getElementById("update-price").value= parent[2].innerText;
+	editModal.style.display = 'block';
+}
+function editUser(e){
+	e.preventDefault();
+	let name = document.getElementById("update-name").value;
+	let price = document.getElementById("update-price").value;
+	const url = `/manager/product/edit/${ProdId}`;
+	fetch(url,{
+		method:"POST",
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-type':'application/json'
+          },
+          body:JSON.stringify({name:name, price:price})
+	})
+	  .then((res) => res.text())
+      .then((data) => alert(data))
+      .then((data)=>closeEditModal());
+}
+function closeEditModal(){
+	document.getElementById('update-name').value ='';
+	document.getElementById('update-price').value ='';
+	editModal.style.display ='none';
+}
+function  getCategoryQuantity(){
+	const quantity =  fetch("/manager/category/quantity")
+	                 .then((res)=>res.json())
+	                 .then((data)=>{
+	                	 interior = data.interior;
+	                	 exterior = data.exterior;
+	                	 performance = data.performance;
+	                	 oils = data.oils;
+	                	 replacement = data.replacement;
+	                	 motocycle = data.motocycle;
+	                	 tires = data.tires;
+	                	 tools = data.tools;
+	                	 const total = parseFloat(tires)+parseFloat(interior)+parseFloat(exterior)+parseFloat(replacement)+
+	                	               parseFloat(oils)+parseFloat(motocycle)+parseFloat(performance)+parseFloat(tools);
+	                	 console.log(total);
+	                	 const interiorPerc = Number(interior)*100/total;
+	                	 const exteriorPerc=Number(exterior)*100/total;
+	                	 const replacementPerc=Number(replacement)*100/total 
+	                	 const oilsPerc =Number(oils)*100/total;
+	                	 const tiresPerc = Number(tires)*100/total;
+	                	 const motocyclePerc = Number(motocycle)*100/total;
+	                	 const performancePerc = Number(performance)*100/total;
+	                	 const toolsPerc = Number(tools)*100/total;
+	                	 document.getElementById('tq').innerHTML =`${tools}`;
+	                	 document.getElementById('pq').innerHTML =`${performance}`;
+	                	 document.getElementById('mq').innerHTML =`${motocycle}`;
+	                	 document.getElementById('oq').innerHTML =`${oils}`;
+	                	 document.getElementById('xq').innerHTML =`${exterior}`;
+	                	 document.getElementById('iq').innerHTML =`${interior}`;
+	                	 document.getElementById('sq').innerHTML =`${tires}`;
+	                	 document.getElementById('rq').innerHTML =`${replacement}`;
+	                	 
+	                	 document.getElementById('tp').innerHTML =`${toolsPerc.toFixed(2)}%`;
+	                	 document.getElementById('pp').innerHTML =`${(performancePerc.toFixed(2))}%`;
+	                	 document.getElementById('mp').innerHTML =`${motocyclePerc.toFixed(2)}%`;
+	                	 document.getElementById('op').innerHTML =`${oilsPerc.toFixed(2)}%`;
+	                	 document.getElementById('xp').innerHTML =`${exteriorPerc.toFixed(2)}%`;
+	                	 document.getElementById('ip').innerHTML =`${interiorPerc.toFixed(2)}%`;
+	                	 document.getElementById('sp').innerHTML =`${tiresPerc.toFixed(2)}%`;
+	                	 document.getElementById('rp').innerHTML =`${replacementPerc.toFixed(2)}%`;
+	                	 let dataQuantity =[Number(tires),Number(interior),Number(exterior),Number(replacement),
+	             	         Number(oils),Number(motocycle),Number(performance),Number(tools)];
+	               
+	             let ctx = document.getElementById('chart-cat').getContext('2d');
+	             let config ={
+	                type: 'doughnut',
+	                data: {
+	                    labels: ['tires', 'Interior', 'Exterior', 'Replacement', 'Oils', 'Motocycles', 'Performance', 'Tools'],
+	                    datasets: [{
+	                        label: 'Product Categories',
+	                        data: dataQuantity,
+	                        backgroundColor: [
+	                            'rgb(128, 130, 137)',
+	                             'rgb(49, 113, 224)',
+	                             'rgb(40, 186, 98)',
+	                             'rgb(224, 172, 8)',
+	                             'rgb(207, 60, 79)',
+	                             'rgb(34, 36, 40)',
+	                             'rgb(91, 44, 111)',
+	                             'rgb(11, 83, 69 )'
+	                        ]
+	                    }]
+	                },
+	                options: {
+	             		responsive: true,
+	             		legend: {
+	             			display: false,
+	             		},
+	             		title: {
+	             			display: true,
+	             			text: 'Product Category Composition'
+	             		},
+	             		animation: {
+	             			animateScale: true,
+	             			animateRotate: true
+	             		}
+	             	}
+	             }
+	             const myChart = new Chart(ctx,config);
+	                 });
+}
+
+function addProduct(e){
+	e.preventDefault();
+    let name = document.getElementById('name').value;
+    let price = document.getElementById('price').value;
+    let image = document.getElementById('image').value;
+    let description  = document.getElementById('description').value;
+    let cat =document.getElementById('category').value;
+    let categories = [];
+    let catArr = cat.split(',');
+    for(let i = 0; i<catArr.length; i++){
+    	categories.push({name:catArr[i]});
+    }
+    let quantity = document.getElementById('quantity').value;
+    console.log(JSON.stringify({name:name, price:Number(price), image:image, quantity:Number(quantity), categories:categories, description:description}));
+    fetch('/manager/products/add', {
+      method:'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-type':'application/json'
+      },
+      body:JSON.stringify({name:name, price:Number(price), image:image, quantity:Number(quantity), categories:categories})
+    })
+    .then((res) => res.text())
+    .then((data) => alert(data))
+    .then(clearAllInputs())
+  }
+const deleteBtn = document.getElementsByClassName('delete');
+deleteModal = document.getElementById('delete-modal');
+document.getElementById('delete-X').addEventListener('click', closeDeleteModal);
+document.getElementById('delete-user-btn').addEventListener('click', deleteUser);
+for(let i=0;i<deleteBtn.length;i++){
+	deleteBtn[i].addEventListener('click' , openDeleteModal);
+}
+function openDeleteModal(e){
+	const parent =e.target.parentNode.parentNode.children;
+	const product = parent[0];
+	ProdId = parent[0].innerText;
+	deleteModal.style.display = 'block';
+}
+function deleteUser(e){
+	e.preventDefault();
+	const url = `/manager/product/del/${ProdId}`;
+	fetch(url)
+	  .then((res) => res.text())
+      .then((data) => alert(data))
+      .then((data)=>closeDeleteModal());
+}
+function closeDeleteModal(){
+	deleteModal.style.display ='none';
+}
+function outsideClick(e) {
+	  if (e.target == modal) {
+	    modal.style.display = 'none';
+	  }
+	  if (e.target == stockModal) {
+		    stockModal.style.display = 'none';
+		  }
+	  if (e.target == deleteModal) {
+		    deleteModal.style.display = 'none';
+		  }
+	  if (e.target == editModal) {
+		    editModal.style.display = 'none';
+		  }
+	}
+</script>
+</html>
+
+
+
+
+

@@ -1,0 +1,304 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet"  href="/css/dashboard_styles.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="/webjars/font-awesome/5.15.0/css/all.css">
+</head>
+<body>
+    <div class="side-nav-container" th:style="'background-image:url(' + @{/images/sidebar.jpg} + '); background-repeat: no-repeat; background-position: center; background-size: cover;'">
+        <div class="side-nav-wrapper">
+            <div class="profile-container">
+                <div class="nav-icon-container">
+                    <i class="fas fa-user-alt"></i>
+                    </div>
+                    <div class="nav-text-container" sec:authentication="name">
+                    </div>
+            </div>
+            <hr>
+            <ul class="nav-items">
+                <li class="nav-item" th:href="@{/admin/dashboard}">
+                    <div class="nav-icon-container">
+                    <a th:href="@{/admin/dashboard}">
+                        <i class="fas fa-th"></i>
+                     </a>
+                    </div>
+                    <div class="nav-text-container">
+                     <a th:href="@{/admin/dashboard}">
+                        Dashboard
+                     </a>
+                    </div>
+                </li>
+                <li class="nav-item" th:href="@{/admin/inventory}">
+                    <div class="nav-icon-container">
+                     <a th:href="@{/admin/inventory}">
+                        <i class="fas fa-cubes"></i>
+                      </a>
+                    </div>
+                    <div class="nav-text-container">
+                     <a th:href="@{/admin/inventory}">
+                       Inventory
+                     </a>
+                    </div>
+                </li>
+                <li class="nav-item" th:href="@{/admin/users}">
+                    <div class="nav-icon-container">
+                     <a th:href="@{/admin/orders}">
+                    <i class="fas fa-clipboard-list"></i>
+                    </a>
+                    </div>
+                    <div class="nav-text-container">
+                     <a th:href="@{/admin/users}">
+                       users
+                     </a>
+                    </div>
+                </li>
+                <li class="nav-item" th:href="@{/admin/sales}">
+                    <div class="nav-icon-container">
+                     <a th:href="@{/admin/sales}">
+                        <i class="fas fa-money-check-alt"></i>
+                        </a>
+                    </div>
+                    <div class="nav-text-container">
+                     <a th:href="@{/admin/sales}">
+                       Sales
+                     </a>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+        <div class="section-container">
+          <div class="upper-nav">
+             <div class="logo-container">
+                <div class="logo">
+                  <img th:src="@{/images/sunshine stores.png}" alt="logo" class="logo-img">
+                </div>
+                  <div class="logo-text">
+                    Sunshine<br>Stores
+                  </div>
+              </div>
+            
+            <div class="nav-button-group">
+             <form  name= "f" th:action="@{/logout}" method="post">
+             <button type="submit" id="logout-btn" class="logout-btn">logout</button>
+             </form>
+            </div>
+          </div>
+        <div class="main-section-container">
+          <div class="totals-container">
+          
+          <div class="totals-wrapper">
+            <div class="totals-upper">
+              <div class="totals-icon-container" style="background:#fb8c00">
+                  <i class="fas fa-money-check-alt"></i>
+              </div>
+              <div class="totals-main">
+                <div class="totals-label">Today Sales</div>
+                <div class="totals-value" id="today-sale-size"></div>
+              </div>
+            </div>
+            <hr class="totals-bottom">
+            
+          </div>
+          
+            <div class="totals-wrapper">
+            <div class="totals-upper">
+              <div class="totals-icon-container" style="background:#28ba62">
+                  <i class="fas fa-dolly"></i>
+              </div>
+              <div class="totals-main">
+                <div class="totals-label">Unpicked Sales</div>
+               <div class="totals-value" id="unpicked-size"></div>
+              </div>
+            </div>
+            <hr class="totals-bottom">
+            
+          </div>
+          
+          <div class="totals-wrapper">
+            <div class="totals-upper">
+              <div class="totals-icon-container" style="background:#e53935;">
+                  <i class="fas fa-cubes"></i>
+              </div>
+              <div class="totals-main">
+                <div class="totals-label">Inventory</div>
+               <div class="totals-value" id="inventory-size"></div>
+              </div>
+            </div>
+            <hr class="totals-bottom">
+            
+          </div>
+          
+            <div class="totals-wrapper">
+            <div class="totals-upper">
+              <div class="totals-icon-container" style="background:#36abe0;">
+                  <i class="fas fa-chalkboard-teacher"></i>
+              </div>
+              <div class="totals-main">
+                <div class="totals-label">Users</div>
+                <div class="totals-value" id="users-size"></div>
+              </div>
+            </div>
+            <hr class="totals-bottom">
+            
+          </div>
+       </div>
+       
+       <div class="main-content">
+       <div class="main-wrapper">
+       <div class="sales-ranking">
+       <div class="sale-title-wrapper">Product Ranking</div>
+         <table>
+         <tr>
+         <th>Product</th>
+         <th>Worth</th>
+         </tr>
+         <tr>
+         <td>motor_trend_MT-923-bk</td>
+         <td>150000</td>
+         </tr>
+         <tr>
+         <td>motor_trend_MT-923-bk</td>
+         <td>120000</td>
+         </tr>
+         <tr>
+         <td>Car Windshield Sun Shade - Blocks</td>
+         <td>150000</td>
+         </tr>
+         </table>
+       </div>
+       <div class="weekly-sales">
+       <div class="sale-title-wrapper">Weekly Sales</div>
+       <div class="graph-bg" style="background:#36abe0;box-shadow:    0 2px 6px rgba(54,171,224,1)">
+         <canvas id="weeklylineChart" height="100%"></canvas>
+        </div>
+
+       </div>
+       </div>
+        </div> 
+        <div class="unpicked-container">
+          <table class="sales-table">
+	         <tr>
+             <th>ID</th>
+             <th>Customer Name</th>
+             <th>Order Date</th>
+             <th>Total</th>
+             <th></th>
+             </tr>
+             <tr class="row-data" th:each="sale:${unpicked}">
+             <td th:text="${sale.id}"></td>
+	         <td th:text="${sale.customerName}"></td>
+	         <td th:text="${sale.orderDate}"></td>
+	         <td th:text="${sale.total}"></td>
+	         <td><button class="picked-btn">Pick up</button></td>
+	         </tr>
+          </table>
+        </div> 
+         </div>
+    </div>
+</body>
+<script type="text/javascript" th:src="@{/js/Chart.js}"></script>
+<script>
+drawWeeklyLine();
+getUserSize();
+getUnpickedSize();
+getInventorySize();
+getTodaySaleSize()
+const pickedBtn = document.getElementsByClassName('picked-btn');
+for(let i =0;i<pickedBtn.length;i++){
+	pickedBtn[i].addEventListener('click',pickupSale);
+}
+function pickupSale(e){
+	e.preventDefault();
+	const id = e.target.parentNode.parentNode.children[0].innerHTML;
+	url ='/admin/pickup/'+id;
+	fetch(url)
+     .then(res=>res.text())
+	     .then(data=>alert(data))
+	     .then(data=>{
+	    	 e.target.parentNode.parentNode.parentNode.removeChild(e.target.parentNode.parentNode);
+	     });
+}
+function getUserSize(){
+	fetch("/admin/usersize")
+	     .then(res=>res.text())
+	      .then(data=>{
+		     document.getElementById('users-size').innerHTML = data;
+	      })
+}
+function getTodaySaleSize(){
+	fetch("/admin/todaysale")
+	     .then(res=>res.text())
+	      .then(data=>{
+		     document.getElementById('today-sale-size').innerHTML = data;
+	      })
+}
+function getInventorySize(){
+	fetch("/admin/inventorysize")
+	     .then(res=>res.text())
+	      .then(data=>{
+		     document.getElementById('inventory-size').innerHTML = data;
+	      })
+}
+function getUnpickedSize(){
+	fetch("/admin/unpickedsize")
+	     .then(res=>res.text())
+	      .then(data=>{
+		     document.getElementById('unpicked-size').innerHTML = data;
+	      })
+}
+function drawWeeklyLine(){
+	   var ctx = document.getElementById('weeklylineChart').getContext('2d');
+	   var myChart = new Chart(ctx, {
+	       type: 'line',
+	       data: {
+	           labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+	           datasets: [{
+	               label: '',
+	               data: [12000,7000, 10000, 9000, 8000, 11000, 13000],
+	               borderWidth: 1,
+	               borderColor: "#ffffff",
+	           }]
+	       },
+	       options: {
+	    	   legend: {
+	               fontColor: "#d7d8da"
+	           },
+	           scales: {
+	               yAxes: [{
+	            	   gridLines : {
+		                   display : true,
+		                   borderDash:[2 ,6],
+		                   color:"#d7d8da"
+		               },
+	                   ticks: {
+	                	   beginAtZero: true,
+	                       display: false
+	                   }
+		               
+	               }],
+	       xAxes: [{
+     	   gridLines : {
+                display : true,
+                borderDash:[2, 6],
+                color:"#d7d8da"
+            },
+            ticks: {
+         	   beginAtZero: false,
+                fontColor: "#ffffff",
+            }
+        }]
+	           }
+	       }
+	   });
+}
+</script>
+</html>
+
+
+
+

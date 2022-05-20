@@ -1,0 +1,216 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/products_styles.css}">
+    <link rel="stylesheet" type="text/css" href="/webjars/font-awesome/5.15.0/css/all.css">
+    <title>Products</title>
+</head>
+<body>
+ <nav>
+    <div class="nav-container">
+        <div class="left-container">
+            <div class="menu-icon-container">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="logo-container">
+                <div class="logo">
+                  <img th:src="@{/images/sunshine stores.png}" alt="logo" class="logo-img">
+                </div>
+                  <div class="logo-text">
+                    Sunshine<br>Stores
+                  </div>
+            </div>
+        </div>
+
+        <div class="middle-container">
+            <div class="middle-wrapper">
+                <input type="text" name="search" placeholder="search product" id="search">
+            <button><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+
+        <div class="right-container">
+            <div class="right-wrapper">
+              <div class="login-logout-container" >
+                <button  id="buy-btn">Buy</button>
+                <form class="login-container" form-method="post" th:action="@{/login}">
+                <button  id="login-btn" sec:authorize="isAnonymous()" type="submit">login</button>
+                </form>
+                <form class="logout-container" form-method="post" th:action="@{/logout}">
+                <button  id="logout-btn" sec:authorize="isAuthenticated()" type="submit">logout</button>
+                </form>
+              </div>
+              <div class="login-user-container" sec:authorize="isAuthenticated()">
+                  <div class="login-icon">
+                  <i class="fas fa-user-shield"></i>
+                  </div>
+                  <div class="login-user" sec:authentication="name"></div>
+              </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <div class="lower-navigation-container">
+      <div class="lower-wrapper">
+       <div class="cart-container" id="cart-container">
+                  <div class="cart-number" styles="color:#cf3c4f;">0</div>
+                  <div class="cart-icon"><i class="fas fa-shopping-cart"></i>Cart</div>
+                  <div id="cart-worth-container">
+                  <div id="money-symble">KES</div>
+                  <div id="cart-worth">0</div>
+                  </div>
+              </div>
+              
+        <ul class="nav-items">
+            <li class="nav-item">
+              Accesories
+            </li>
+            <li class="nav-item">
+              Electricals
+            </li>
+            <li class="nav-item">
+              Spare Parts
+            </li>
+            <li class="nav-item">
+              Tools
+            </li>
+            <li class="nav-item">
+              Workshop Supplies
+            </li>
+          </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="navigation-container">
+            <div class="division">
+                <div class="division-heading">
+                    <div class="division-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <div class="division-text">
+                        Auto Parts
+                    </div>
+                </div>
+                <ul class="division-content">
+                  <li>Tires</li>
+                  <li>Brakes</li>
+                  <li>Bateries</li>
+                  <li>Exhaust</li>
+                  <li>Steering</li>
+                  <li>Clutch</li>
+                  <li>Battery</li>
+                </ul>
+            </div>
+            <div class="division">
+                <div class="division-heading">
+                    <div class="division-icon">
+                        <i class="fas fa-car-alt"></i>
+                    </div>
+                    <div class="division-text">
+                        AutoMotive Type
+                    </div>
+                </div>
+                <ul class="division-content">
+                  <li>Car</li>
+                  <li>Tuktuk</li>
+                  <li>Matatu</li>
+                  <li>Bus</li>
+                  <li>Motocycle</li>
+                  <li>Pickup</li>
+                  <li>Lorry</li>
+                </ul>
+            </div>
+            <div class="division">
+                <div class="division-heading">
+                    <div class="division-icon">
+                        <i class="fas fa-wrench"></i>
+                    </div>
+                    <div class="division-text">
+                        Tools
+                    </div>
+                </div>
+                <ul class="division-content">
+                  <li>Spanners</li>
+                  <li>Socket Wrenches</li>
+                  <li>Pullers</li>
+                  <li>Bus</li>
+                  <li>Pliers</li>
+                  <li>Torque Wrenches</li>
+                  <li>Jack Stand</li>
+                </ul>
+            </div>
+
+            <div class="division">
+                <div class="division-heading">
+                    <div class="division-icon">
+                        <i class="fas fa-caravan"></i>
+                    </div>
+                    <div class="division-text">
+                        Brands
+                    </div>
+                </div>
+                <ul class="division-content">
+                  <li>BMW</li>
+                  <li>Volks Wagen</li>
+                  <li>Peugeot</li>
+                  <li>Hyundai</li>
+                  <li>Suzuki</li>
+                  <li>Toyota</li>
+                  <li>Ford </li>
+                  <li>Audi </li>
+                </ul>
+            </div>
+        </div>
+        <div class="main-section-container" id="section">
+            
+        </div>
+     </div>
+     
+    <div id="view-cart-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header" id="stock-X">
+        <span id ='close-view-cart' class="close">&times;</span>
+        View Cart
+      </div>
+      <div class="modal-body">
+      <form name="f" class="product-form" id="view-chart-form">
+                          
+       </form>
+      </div>
+     </div>
+    </div>
+     
+    <div id="cart-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header" id="stock-X">
+        <span  id ="close-cart" class="close">&times;</span>
+        Add To Cart
+      </div>
+      <div class="modal-body">
+      <div  id="addStock"class="product-form">
+                          <div class="form-division">
+                                  <input type="text" class="input" autocomplete="off" id="cart-name" name="cart-name" required/>
+                                  <label for="name" class="label-name">
+                                      <span class="content-name" id="p-label">Name</span>
+                                  </label>
+                           </div>
+                           <div class="form-division">
+                            <input type="number" class="input" autocomplete="off" id="cart-quantity" name="cart-quantity" required/>
+                            <label for="name" class="label-name">
+                                <span class="content-name">Quantity</span>
+                            </label>
+                         </div>
+                         <div class="form-buttons">
+                           <button  id="add-cart-btn" class="enter-btn">Submit</button>
+                           <button id="cart-cancel" class="cancel-btn">cancel</button>
+                         </div>
+                         </div>
+            </div>
+           </div>
+          </div>
+</body>
+</html>

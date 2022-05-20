@@ -1,0 +1,316 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales</title>
+    <link rel="stylesheet" href="/css/sales_styles.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="/webjars/font-awesome/5.15.0/css/all.css">
+</head>
+<body>
+    <div class="side-nav-container" th:style="'background-image:url(' + @{/images/sidebar.jpg} + '); background-repeat: no-repeat; background-position: center; background-size: cover;'">
+        <div class="side-nav-wrapper">
+            <div class="profile-container">
+                <div class="nav-icon-container">
+                    <i class="fas fa-user-alt"></i>
+                    </div>
+                    <div class="nav-text-container" sec:authentication="name">
+                      
+                    </div>
+            </div>
+            <hr>
+            <ul class="nav-items">
+                <li class="nav-item" th:href="@{/admin/dashboard}">
+                    <div class="nav-icon-container">
+                    <a th:href="@{/admin/dashboard}">
+                        <i class="fas fa-th"></i>
+                     </a>
+                    </div>
+                    <div class="nav-text-container">
+                     <a th:href="@{/admin/dashboard}">
+                        Dashboard
+                     </a>
+                    </div>
+                </li>
+                <li class="nav-item" th:href="@{/admin/inventory}">
+                    <div class="nav-icon-container">
+                     <a th:href="@{/admin/inventory}">
+                        <i class="fas fa-cubes"></i>
+                      </a>
+                    </div>
+                    <div class="nav-text-container">
+                     <a th:href="@{/admin/inventory}">
+                       Inventory
+                     </a>
+                    </div>
+                </li>
+                <li class="nav-item" th:href="@{/admin/orders}">
+                    <div class="nav-icon-container">
+                     <a th:href="@{/admin/orders}">
+                    <i class="fas fa-clipboard-list"></i>
+                    </a>
+                    </div>
+                    <div class="nav-text-container">
+                     <a th:href="@{/admin/users}">
+                       Users
+                     </a>
+                    </div>
+                </li>
+                <li class="nav-item" th:href="@{/admin/sales}">
+                    <div class="nav-icon-container">
+                     <a th:href="@{/admin/sales}">
+                        <i class="fas fa-money-check-alt"></i>
+                        </a>
+                    </div>
+                    <div class="nav-text-container">
+                     <a th:href="@{/admin/sales}">
+                       Sales
+                     </a>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+   <div class="section-container">
+          <div class="upper-nav">
+             <div class="logo-container">
+                <div class="logo">
+                  <img th:src="@{/images/sunshine stores.png}" alt="logo" class="logo-img">
+                </div>
+                  <div class="logo-text">
+                    Sunshine<br>Stores
+                  </div>
+              </div>
+            
+            <div class="nav-button-group">
+             <form  name= "f" th:action="@{/logout}" method="post">
+             <button type="submit" id="logout-btn" class="logout-btn">logout</button>
+             </form>
+            </div>
+          </div>
+          <div class="main-section-container">
+           <div class="middle-container">
+           <div class= "search-container">
+              <div class="search-wrapper">
+              <input type="text" autocomplete ="off"  placeholder="search sale" id="search">
+              </div>
+              <div class="search-btn">
+              <div class="btn-search"> <i class="fas fa-search"></i> </div>
+              </div>
+           </div>
+        </div>
+        
+        <div class="analytics-container">
+        <div class="analytics-item">
+         <div class="graph-bg" style="background:#fb8c00 ; box-shadow:   0 2px 6px rgba(251,140,0,1);">
+         <canvas id="weeklylineChart" height="100%"></canvas>
+         </div>
+         <div class="analytics-item-description">
+         &nbsp;<b>Daily Sales</b><br>&nbsp;<br>&nbsp;
+         15% increase compaired to last week
+         <hr style="margin-top:15px">
+         </div>
+        </div>
+        <div class="analytics-item" >
+        <div class="graph-bg" style="background:#36abe0;box-shadow:    0 2px 6px rgba(54,171,224,1)">
+        <canvas id="weeklyBarChart" height="100%"></canvas>
+         </div>
+         <div class="analytics-item-description">
+         &nbsp;<b>Sales Composition</b><br>&nbsp;<br>&nbsp;
+         tires takes the lead by 120000
+         <hr style="margin-top:15px">
+         </div>
+        </div>
+        <div class="analytics-item">
+        <div class="graph-bg" style="background:#e53935;box-shadow:   0 2px 5px rgba(229,57,53,1);">
+        <canvas id="annualChart" height="100%"></canvas>
+         </div>
+         <div class="analytics-item-description">
+         &nbsp;<b>Annual Sales</b><br>&nbsp;<br>&nbsp;
+         July has the highest sales with 130000
+         <hr style="margin-top:15px">
+         </div>
+        </div>
+        </div>
+          
+          <div class= "sales-container">
+          <div class= "container-header">SALES</div>
+          <table class="sales-table">
+	         <tr>
+             <th>ID</th>
+             <th>Customer Name</th>
+             <th>Order Date</th>
+             <th>Total</th>
+             </tr>
+             <tr class="row-data" th:each="sale:${sales}">
+             <td th:text="${sale.id}"></td>
+	         <td th:text="${sale.customerName}"></td>
+	         <td th:text="${sale.orderDate}"></td>
+	         <td th:text="${sale.total}"></td>
+	         </tr>
+          </table>
+          </div>
+          </div>
+    </div>
+</body>
+<script type="text/javascript" th:src="@{/js/Chart.js}"></script>
+<script>
+   const rowData = document.getElementsByClassName('row-data');
+   if(rowData.length>1){
+     for(let i =0;i<rowData.length;i++){
+	   rowData[i].addEventListener('click',redirectToItemPage);
+     } 
+   }
+   drawWeeklyLine();
+   drawAnnualLine();
+   drawSalesBar();
+   function redirectToItemPage(e){
+	   e.preventDefault();
+	   const  id =e.target.parentNode.children[0].innerText;
+	   const url = "/admin/sales/details/"+id;
+	   window.location.href = url;
+   }
+   function drawWeeklyLine(){
+	   var ctx = document.getElementById('weeklylineChart').getContext('2d');
+	   var myChart = new Chart(ctx, {
+	       type: 'line',
+	       data: {
+	           labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+	           datasets: [{
+	               label: '',
+	               data: [12000,7000, 10000, 9000, 8000, 11000, 13000],
+	               borderWidth: 1,
+	               borderColor: "#ffffff",
+	           }]
+	       },
+	       options: {
+	    	   legend: {
+	               fontColor: "#d7d8da"
+	           },
+	           scales: {
+	               yAxes: [{
+	            	   gridLines : {
+		                   display : true,
+		                   borderDash:[2 ,6],
+		                   color:"#d7d8da"
+		               },
+	                   ticks: {
+	                	   beginAtZero: true,
+	                       display: false
+	                   }
+		               
+	               }],
+	       xAxes: [{
+        	   gridLines : {
+                   display : true,
+                   borderDash:[2, 6],
+                   color:"#d7d8da"
+               },
+               ticks: {
+            	   beginAtZero: false,
+                   fontColor: "#ffffff",
+               }
+           }]
+	           }
+	       }
+	   });
+   }
+   function drawSalesBar(){
+	   var ctx = document.getElementById('weeklyBarChart').getContext('2d');
+	   var myChart = new Chart(ctx, {
+	       type: 'bar',
+	       data: {
+	           labels: ['tires', 'performance', 'replacement', 'interior', 'exterior', 'tools', 'motocycle','oils'],
+	           datasets: [{
+	               label: '',
+	               data: [120000, 70000, 100000, 90000, 80000, 110000, 130000, 100000, 90000, 120000, 70000, 100000,],
+	               borderWidth: 1,
+	               borderColor: "#ffffff",
+	           }]
+	       },
+	       options: {
+	    	   legend: {
+	               fontColor: "#d7d8da"
+	           },
+	           title: {
+        			display: true,
+        			text: 'Sales Composition'
+        		},
+	           scales: {
+	               yAxes: [{
+	            	   gridLines : {
+		                   display : false,
+		               },
+	                   ticks: {
+	                	   beginAtZero: true,
+	                       display: false
+	                   }
+		               
+	               }],
+	       xAxes: [{
+        	   gridLines : {
+                   display : false,
+                  
+               },
+               ticks: {
+            	   display: false,
+            	   beginAtZero: false,
+                   fontColor: "#ffffff",
+               }
+           }]
+	           }
+	       }
+	   });
+   }
+   function drawAnnualLine(){
+	   var ctx = document.getElementById('annualChart').getContext('2d');
+	   var myChart = new Chart(ctx, {
+	       type: 'line',
+	       data: {
+	           labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+	           datasets: [{
+	               label: '',
+	               data: [120000, 70000, 100000, 90000, 80000, 110000, 130000, 100000, 90000, 120000, 70000, 100000,],
+	               borderWidth: 1,
+	               borderColor: "#ffffff",
+	           }]
+	       },
+	       options: {
+	    	   legend: {
+	               fontColor: "#d7d8da"
+	           },
+	           scales: {
+	               yAxes: [{
+	            	   gridLines : {
+		                   display : true,
+		                   borderDash:[2 ,6],
+		                   color:"#d7d8da"
+		               },
+	                   ticks: {
+	                	   beginAtZero: true,
+	                       display: false
+	                   }
+		               
+	               }],
+	       xAxes: [{
+        	   gridLines : {
+                   display : true,
+                   borderDash:[2, 6],
+                   color:"#d7d8da"
+               },
+               ticks: {
+            	   beginAtZero: false,
+                   fontColor: "#ffffff",
+               }
+           }]
+	           }
+	       }
+	   });
+   }
+</script>
+</html>
+
+
+
+

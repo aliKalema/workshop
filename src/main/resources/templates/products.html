@@ -1,0 +1,428 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/products_styles.css}">
+    <link rel="stylesheet" type="text/css" href="/webjars/font-awesome/5.15.0/css/all.css">
+    <title>Products</title>
+</head>
+<body>
+ <nav>
+    <div class="nav-container">
+        <div class="left-container">
+            <div class="menu-icon-container">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="logo-container">
+                <a class="logo" th:href="@{/}">
+                  <img th:src="@{/images/sunshine stores.png}" alt="logo" class="logo-img">
+                </a>
+                  <div class="logo-text">
+                    Sunshine<br>Stores
+                  </div>
+            </div>
+        </div>
+
+        <div class="middle-container">
+            <div class="middle-wrapper">
+                <input type="text" name="search" placeholder="search product" id="search">
+            <button><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+
+        <div class="right-container">
+            <div class="right-wrapper">
+              <div class="login-logout-container" >
+                <button  id="buy-btn">Buy</button>
+                <form class="login-container" form-method="post" th:action="@{/login}">
+                <button  id="login-btn" sec:authorize="isAnonymous()" type="submit">login</button>
+                </form>
+                <form class="logout-container" form-method="post" th:action="@{/logout}">
+                <button  id="logout-btn" sec:authorize="isAuthenticated()" type="submit">logout</button>
+                </form>
+              </div>
+              <div class="login-user-container" sec:authorize="isAuthenticated()">
+                  <div class="login-icon">
+                  <i class="fas fa-user-shield"></i>
+                  </div>
+                  <div class="login-user" sec:authentication="name" id="logged-in-user"></div>
+              </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <div class="lower-navigation-container">
+      <div class="lower-wrapper">
+       <div class="cart-container" id="cart-container">
+                  <div class="cart-number" style="color:#cf3c4f;">0</div>
+                  <div class="cart-icon"><i class="fas fa-shopping-cart"></i>Cart</div>
+                  <div id="cart-worth-container">
+                  <div id="money-symble">KES</div>
+                  <div id="cart-worth">0</div>
+                  </div>
+              </div>
+              
+        <ul class="nav-items">
+            <li class="nav-item">
+              Accesories
+            </li>
+            <li class="nav-item">
+              Electricals
+            </li>
+            <li class="nav-item">
+              Spare Parts
+            </li>
+            <li class="nav-item">
+              Tools
+            </li>
+            <li class="nav-item">
+              Workshop Supplies
+            </li>
+          </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="navigation-container">
+            <div class="division">
+                <div class="division-heading">
+                    <div class="division-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <div class="division-text">
+                        Auto Parts
+                    </div>
+                </div>
+                <ul class="division-content">
+                  <li>Tires</li>
+                  <li>Brakes</li>
+                  <li>Bateries</li>
+                  <li>Exhaust</li>
+                  <li>Steering</li>
+                  <li>Clutch</li>
+                  <li>Battery</li>
+                </ul>
+            </div>
+            <div class="division">
+                <div class="division-heading">
+                    <div class="division-icon">
+                        <i class="fas fa-car-alt"></i>
+                    </div>
+                    <div class="division-text">
+                        AutoMotive Type
+                    </div>
+                </div>
+                <ul class="division-content">
+                  <li>Car</li>
+                  <li>Tuktuk</li>
+                  <li>Matatu</li>
+                  <li>Bus</li>
+                  <li>Motocycle</li>
+                  <li>Pickup</li>
+                  <li>Lorry</li>
+                </ul>
+            </div>
+            <div class="division">
+                <div class="division-heading">
+                    <div class="division-icon">
+                        <i class="fas fa-wrench"></i>
+                    </div>
+                    <div class="division-text">
+                        Tools
+                    </div>
+                </div>
+                <ul class="division-content">
+                  <li>Spanners</li>
+                  <li>Socket Wrenches</li>
+                  <li>Pullers</li>
+                  <li>Bus</li>
+                  <li>Pliers</li>
+                  <li>Torque Wrenches</li>
+                  <li>Jack Stand</li>
+                </ul>
+            </div>
+
+            <div class="division">
+                <div class="division-heading">
+                    <div class="division-icon">
+                        <i class="fas fa-caravan"></i>
+                    </div>
+                    <div class="division-text">
+                        Brands
+                    </div>
+                </div>
+                <ul class="division-content">
+                  <li>BMW</li>
+                  <li>Volks Wagen</li>
+                  <li>Peugeot</li>
+                  <li>Hyundai</li>
+                  <li>Suzuki</li>
+                  <li>Toyota</li>
+                  <li>Ford </li>
+                  <li>Audi </li>
+                </ul>
+            </div>
+        </div>
+        <div class="main-section-container" id="section">
+            
+        </div>
+     </div>
+     
+    <div id="view-cart-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header" id="stock-X">
+        <span id ='close-view-cart' class="close">&times;</span>
+        View Cart
+      </div>
+      <div class="modal-body">
+      <form name="f" class="product-form" id="view-chart-form">
+                          
+       </form>
+      </div>
+     </div>
+    </div>
+     
+    <div id="cart-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header" id="stock-X">
+        <span  id ="close-cart" class="close">&times;</span>
+        Add To Cart
+      </div>
+      <div class="modal-body">
+      <div  id="addStock"class="product-form">
+                          <div class="form-division">
+                                  <input type="text" class="input" autocomplete="off" id="cart-name" name="cart-name" required/>
+                                  <label for="name" class="label-name">
+                                      <span class="content-name" id="p-label">Name</span>
+                                  </label>
+                           </div>
+                           <div class="form-division">
+                            <input type="number" class="input" autocomplete="off" id="cart-quantity" name="cart-quantity" required/>
+                            <label for="name" class="label-name">
+                                <span class="content-name">Quantity</span>
+                            </label>
+                         </div>
+                         <div class="form-buttons">
+                           <button  id="add-cart-btn" class="enter-btn">Submit</button>
+                           <button id="cart-cancel" class="cancel-btn">cancel</button>
+                         </div>
+                         </div>
+            </div>
+           </div>
+          </div>
+</body>
+<script type="text/javascript">
+     const section =document.getElementById('section');
+	 document.querySelector('.close').addEventListener('click',closeCartModal);
+	 const cancelBtn = document.querySelector('.cancel-btn');
+	 const cartModal = document.getElementById('cart-modal');
+	 const viewModal = document.getElementById('view-cart-modal');
+	 const logout =document.getElementById('logout-btn');
+	 document.getElementById('buy-btn').addEventListener('click',buyProducts);
+;	 document.getElementById("add-cart-btn").addEventListener("click", addCart);
+	 document.querySelector(".cart-icon").addEventListener("click", viewCartModal);
+	 document.querySelector(".cart-number").addEventListener("click", viewCartModal);
+	 document.querySelector("#cart-worth").addEventListener("click", viewCartModal);
+	 document.querySelector("#money-symble").addEventListener("click", viewCartModal);
+	 const viewCartForm = document.getElementById('view-chart-form');
+	 let cartStock = [];
+	 let cartImage = '';
+	 let price= 0;
+	 let total = 0;
+	 let totalQuantity = 0;
+	 
+	 if(localStorage.length>0){
+		 for(let i =0;i<localStorage.length;i++){
+			 let key = 'cart'+i.toString();
+			 myObj=JSON.parse(localStorage.getItem(key));
+			 price =  myObj.price;
+			 totalQuantity = totalQuantity +myObj.quantity;
+			 total = total + (price * myObj.quantity);
+		 }
+	    document.getElementById('cart-worth').innerText = total;
+	    document.querySelector(".cart-number").innerText = totalQuantity;
+	 }
+   window.addEventListener('click', outsideClick);
+   cancelBtn.addEventListener('click', closeCartModal);
+   document.getElementById('cart-cancel').addEventListener('click', closeCartModal);
+   document.querySelector(".close").addEventListener('click', closeCartModal);
+   document.getElementById("close-view-cart").addEventListener('click', closeViewCartModal);
+   document.getElementById("close-cart").addEventListener('click', closeCartModal);
+   let output = "";
+   getProducts();
+    function getProducts(){
+    	const urlArr = window.location.href.split('/');
+    	const imgurl = urlArr[0]+"://"+urlArr[1]+"/images";
+    	const url = "/products/category/" + urlArr[urlArr.length -1];
+    	 fetch(url)
+    	    .then((res) => res.json())
+    	    .then(function(data){
+    	    	for(let i= 0;i<data.length;i++){
+    	    		output += `<div class="product-container">
+    	    		<div class="product-wrapper">
+	                     <div class = "product-image-container">
+	                        <img class= "product-img" src="/images/${data[i].image}" style="height:220px;"/>
+	                     </div>
+	                     <div class = "product-name-container">
+	                        ${data[i].name}
+	                     </div>
+	                     <div class = "product-price-container">
+	                     <div class="price-heading">KES</div>
+		                     <div class="price">${data[i].price}</div>
+	                     </div>
+	                     <div class=" cart-btn-container">
+	                       <button  class="add-to-cart">Add To Cart</button>
+	                       <form name="f" th:action="@{/details}" method="get" class="form-details">
+	                       <button type = "submit" class="product-details">Details</button>
+	                       </form>
+	                     </div>
+	                     </div>
+	                   </div>`;
+    	    	}
+    	    	section.innerHTML=output;
+    	    })
+    	     .then(function(data){
+    	    			 const carts = document.getElementsByClassName('add-to-cart');
+    	    			 for(let i=0;i<carts.length;i++){
+    	    				 carts[i].addEventListener('click',function(e){
+    	    					 e.preventDefault();
+    	    					 const parent = e.target.parentNode.parentNode.children;
+    	    					 const name = parent[1].innerText;
+    	    					 const updateModal = document.getElementById('update-modal');
+    	    					 image = parent[0].children[0].getAttribute('src');
+    	    					 console.log(image);
+    	    					 price = Number(parent[2].children[1].innerText);
+    	    					 cartModal.style.display ='block';
+    	    					 document.getElementById("cart-name").value = name;
+    	    					 document.getElementById("cart-name").readOnly = true;
+    	    					 const label = document.getElementById("p-label");
+    	    					 label.style.transform ='translateY(-120%)';
+    	    					 label.style.fontSize = '14px';
+    	    					 label.style.color ='#428bca';
+    	    				 });
+    	    			 }
+    	    		 })
+    }
+    function addCart(e){
+    	e.preventDefault();
+    	const name = document.getElementById('cart-name').value;
+    	const quantity = Number(document.getElementById('cart-quantity').value);
+    	totalQuantity = totalQuantity + quantity;
+    	document.querySelector(".cart-number").innerText = totalQuantity;
+    	if(quantity != NaN && quantity>0){
+    	total = total + (Math.round(quantity) * price);
+    	let count =localStorage.length;
+    	let key = "cart"+count.toString();
+    	let cs = {
+				 name:name,
+				 quantity:quantity,
+				 price:price,
+				 image:image
+			    }
+		cartStock.push(cs);
+		localStorage.setItem(key,JSON.stringify(cs));
+    	}
+		document.getElementById('cart-worth').innerText = total;
+		closeCartModal(e);
+    }
+  function viewCartModal(e){
+	  let viewCartOutput ='';
+	  if(localStorage.length>0){
+		  for(let i=0;i<localStorage.length;i++){
+			  let key = "cart"+i.toString();
+			  let myObj = JSON.parse(localStorage.getItem(key));
+			  let productsWorth = Math.round(Number(myObj.quantity)) *  Math.round(Number(myObj.price));
+			  viewCartOutput += 
+				  `<div class="cart-product-container">
+			       <div class="cart-image-container">
+			         <img class= "cart-img" src="${myObj.image}" style="height:160px;"/>
+			       </div>
+			       <div class= "cart-details">
+			       <div class="cart-name-container">
+			        ${myObj.name}
+			        </div>
+				    <div class="cart-price-container">
+				      ${myObj.price}
+				    </div>
+				    <div class="cart-quantity-container">
+				      ${myObj.quantity}
+				    </div>
+				    <div class="cart-total-container">
+				      Total: &nbsp;&nbsp; ${productsWorth}
+				    </div>
+			       </div>
+			       </div>`;
+		  }
+	  }
+	  viewCartOutput += 
+		  `<div class="form-buttons">
+          <button  id="buy-products" class="enter-btn" sec:authorize="isAuthenticated()">Buy Products</button>
+          <button id="cart-cancel" class="cancel-btn">cancel</button>
+        </div>`;
+	  viewCartForm.innerHTML = viewCartOutput;
+	  document.getElementById('buy-products').addEventListener('click',buyProducts);
+	  viewModal.style.display ='block';
+  }
+  function closeViewCartModal(e){
+	  e.preventDefault;
+	  viewModal.style.display ='none';
+  }
+  function buyProducts(e){
+	  const stock = [];
+	
+	  for(let i=0;i<cartStock.length;i++){
+		  stock.push({
+			  productName:cartStock[i].name,
+			  quantity:cartStock[i].quantity
+		  });
+	  }
+	  fetch('/sales', {
+	      method:'POST',
+	      headers: {
+	        'Accept': 'application/json, text/plain, */*',
+	        'Content-type':'application/json'
+	      },
+	      body:JSON.stringify({stock:stock, pickedup:false ,total:null, date:null})
+	    })
+	    .then((res) => res.text())
+	    .then((data) => alert(data))
+	    .then((data)=> clearLocal())
+	    .catch((error) => {
+         alert("Make sure you are Loggin");
+	    });
+	 cartStock=[];
+	 
+  }
+  function clearLocal(){
+	localStorage.clear();
+  	document.getElementById('cart-worth').innerText = '0';
+  	document.querySelector(".cart-number").innerText = '0';
+  }
+  function closeCartModal(e) {
+	e.preventDefault();
+  	document.getElementById('cart-quantity').value ="";
+  	document.getElementById('cart-name').value ="";
+	cartModal.style.display = 'none';
+  }
+  function outsideClick(e) {
+    if (e.target == cartModal) {
+    	cartModal.style.display = 'none';
+    }
+    if (e.target == viewModal) {
+    	viewModal.style.display = 'none';
+    }
+  }
+   if(logout != null){
+   logout.addEventListener('click',clearLocalStorage);
+   }
+  function clearLocalStorage(){
+  	localStorage.clear();
+  }
+
+    </script>
+</html>
+
+
+

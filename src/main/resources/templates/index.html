@@ -1,0 +1,424 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="/webjars/font-awesome/5.15.0/css/all.css">
+    <title>SunshinenStores</title>
+</head>
+<body>
+    <nav>
+    <div class="nav-container">
+        <div class="left-container">
+            <div class="menu-icon-container">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="logo-container">
+                <div class="logo">
+                  <img src="images/sunshine stores.png" alt="logo" class="logo-img">
+                </div>
+                  <div class="logo-text">
+                    Sunshine<br>Stores
+                  </div>
+            </div>
+        </div>
+
+        <div class="middle-container">
+            <div class="middle-wrapper">
+                <input type="text" name="search" placeholder="search product" id="search">
+            <button><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+
+        <div class="right-container">
+            <div class="right-wrapper">
+              <div class="login-logout-container" >
+                <form class="login-container" form-method="post" th:action="@{/login}">
+                <button  id="login-btn" sec:authorize="isAnonymous()" type="submit">login</button>
+                </form>
+                <form class="logout-container" form-method="post" th:action="@{/logout}">
+                <button  id="logout-btn" sec:authorize="isAuthenticated()" type="submit">logout</button>
+                </form>
+              </div>
+              <div class="login-user-container" sec:authorize="isAuthenticated()">
+                  <div class="login-icon">
+                  <i class="fas fa-user-shield"></i>
+                  </div>
+                  <div class="login-user" sec:authentication="name"></div>
+              </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <div class="lower-navigation-container">
+      <div class="lower-wrapper">
+       <div class="cart-container" id="cart-container">
+                  <div class="cart-number" id="cart-number" style="color:#cf3c4f;">0</div>
+                  <div class="cart-icon"><i class="fas fa-shopping-cart"></i>Cart</div>
+                  <div id="cart-worth-container">
+                  <div id="money-symble">KES</div>
+                  <div id="cart-worth">0</div>
+                  </div>
+              </div>
+        <ul class="nav-items">
+            <li class="nav-item">
+              Accesories
+            </li>
+            <li class="nav-item">
+              Electricals
+            </li>
+            <li class="nav-item">
+              Spare Parts
+            </li>
+            <li class="nav-item">
+              Tools
+            </li>
+            <li class="nav-item">
+              Workshop Supllies
+            </li>
+          </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="navigation-container">
+            <div class="division">
+                <div class="division-heading">
+                    <div class="division-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <div class="division-text">
+                        Auto Parts
+                    </div>
+                </div>
+                <ul class="division-content">
+                  <li>Tires</li>
+                  <li>Brakes</li>
+                  <li>Bateries</li>
+                  <li>Exhaust</li>
+                  <li>Steering</li>
+                  <li>Clutch</li>
+                  <li>Battery</li>
+                </ul>
+            </div>
+            <div class="division">
+                <div class="division-heading">
+                    <div class="division-icon">
+                        <i class="fas fa-car-alt"></i>
+                    </div>
+                    <div class="division-text">
+                        AutoMotive Type
+                    </div>
+                </div>
+                <ul class="division-content">
+                  <li>Car</li>
+                  <li>Tuktuk</li>
+                  <li>Matatu</li>
+                  <li>Bus</li>
+                  <li>Motocycle</li>
+                  <li>Pickup</li>
+                  <li>Lorry</li>
+                </ul>
+            </div>
+            <div class="division">
+                <div class="division-heading">
+                    <div class="division-icon">
+                        <i class="fas fa-wrench"></i>
+                    </div>
+                    <div class="division-text">
+                        Tools
+                    </div>
+                </div>
+                <ul class="division-content">
+                  <li>Spanners</li>
+                  <li>Socket Wrenches</li>
+                  <li>Pullers</li>
+                  <li>Bus</li>
+                  <li>Pliers</li>
+                  <li>Torque Wrenches</li>
+                  <li>Jack Stand</li>
+                </ul>
+            </div>
+
+            <div class="division">
+                <div class="division-heading">
+                    <div class="division-icon">
+                        <i class="fas fa-caravan"></i>
+                    </div>
+                    <div class="division-text">
+                        Brands
+                    </div>
+                </div>
+                <ul class="division-content">
+                  <li>BMW</li>
+                  <li>Volks Wagen</li>
+                  <li>Peugeot</li>
+                  <li>Hyundai</li>
+                  <li>Suzuki</li>
+                  <li>Toyota</li>
+                  <li>Ford </li>
+                  <li>Audi </li>
+                </ul>
+            </div>
+        </div>
+        <div class="main-section-container">
+            <div class="sliders-container">
+            <div class="cover-img-container">
+                <div class="cover-wrapper">
+                    <div class="cover-text">
+                        WE'VE GOT<br> ALL THAT<br>
+                        YOU NEED!
+                    </div>
+                    <div class="cover-btn">
+                        <button>Shop Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="slider">
+                <div class="slides">
+                  <!--radio buttons start-->
+                  <input type="radio" name="radio-btn" id="radio1">
+                  <input type="radio" name="radio-btn" id="radio2">
+                  <input type="radio" name="radio-btn" id="radio3">
+                  <input type="radio" name="radio-btn" id="radio4">
+                  <!--radio buttons end-->
+                  <!--slide images start-->
+                  <div class="slide first">
+                    <img src="images/slider1.jpg" alt="">
+                  </div>
+                  <div class="slide">
+                    <img src="images/slider2.jpg" alt="">
+                  </div>
+                  <div class="slide">
+                    <img src="images/slider3.jpg" alt="">
+                  </div>
+                  <div class="slide">
+                    <img src="images/slider4.jpg" alt="">
+                  </div>
+                </div>
+                <!--manual navigation start-->
+                <div class="navigation-manual">
+                  <label for="radio1" class="manual-btn"></label>
+                  <label for="radio2" class="manual-btn"></label>
+                  <label for="radio3" class="manual-btn"></label>
+                  <label for="radio4" class="manual-btn"></label>
+                </div>
+              </div>
+        </div>
+        <div class="category-container">
+            <hr>
+            <div class="category-heading">
+                SHOP BY CATEGORY
+            </div>
+            <div class="category_1">
+              <div class="product-container" id="tires">
+                <a class="products-link" th:href="@{/products/tires}">
+                <img src="images/tires.png" alt="img" style="width: 100%;">
+                </a>
+              </div>
+              <div class="product-container" id="replacement">
+                <a class="products-link" th:href="@{/products/replacement}">
+                <img src="images/replacement_parts.png" alt="img" style="width: 100%;">
+                </a>
+              </div>
+              <div class="product-container" id="oils">
+                <a class="products-link" th:href="@{/products/oils}">
+                <img src="images/oils.png" alt="img" style="width: 100%;">
+                </a>
+              </div>
+              <div class="product-container" id="motocycle">
+              <a class="products-link" th:href="@{/products/motocycle}">
+                <img src="images/motocycle.png" alt="img" style="width: 100%;">
+                </a>
+              </div>
+              <div class="product-container" id="tools">
+              <a class="products-link" th:href="@{/products/tools}">
+                <img src="images/tools.png" alt="img" style="width: 100%;">
+                </a>
+              </div>
+              <div class="product-container" id= "exterior">
+              <a class="products-link" th:href="@{/products/exterior}">
+                <img src="images/exterior_accessories.png" alt="img" style="width: 100%;">
+                </a>
+              </div>
+              <div class="product-container" id="performance">
+              <a class="products-link" th:href="@{/products/performance}">
+                <img src="images/performance.png" alt="img" style="width: 100%;">
+                </a>
+              </div>
+              <div class="product-container" id ="interior">
+              <a class="products-link" th:href="@{/products/interior}">
+                <img src="images/interior_accessories.png" alt="img" style="width: 100%;">
+                </a>
+              </div>
+            </div>
+            <div class="category_2">
+              <div class="installation-container">
+                <img src="images/instllation.jpg"style="width:100%">
+              </div>
+              <div class="installation-text-container">
+                <div class="installation-text">
+                  To make purchases or orders you must login. Make sure you read the terms and conditions
+                </div>
+                <div class="everything-container">
+                  <img src="images/everything.png" style="width: 100%;">
+                </div>
+              </div>
+            </div>
+            <hr style="margin-top: 25px;">
+            <div class="category-heading">
+             BRANDS INVOLVED IN SUNSHINE STORES
+            </div>
+            <div class="category_3">
+              <div class="product-container">
+                <img src="images/brand1.png" alt="img" style="width: 100%;">
+              </div>
+              <div class="product-container">
+                <img src="images/brand2.png" alt="img" style="width: 100%;">
+              </div>
+              <div class="product-container">
+                <img src="images/brand3.png" alt="img" style="width: 100%;">
+              </div>
+              <div class="product-container">
+                <img src="images/brand4.png" alt="img" style="width: 100%;">
+              </div>
+              <div class="product-container">
+                <img src="images/brand5.png" alt="img" style="width: 100%;">
+              </div>
+              <div class="product-container">
+                <img src="images/brand6.png" alt="img" style="width: 100%;">
+              </div>
+              <div class="product-container">
+                <img src="images/brand7.png" alt="img" style="width: 100%;">
+              </div>
+              <div class="product-container">
+                <img src="images/brand8.png" alt="img" style="width: 100%;">
+              </div>
+              <div class="product-container">
+                <img src="images/brand9.png" alt="img" style="width: 100%;">
+              </div>
+              <div class="product-container">
+                <img src="images/brand10.png" alt="img" style="width: 100%;">
+              </div>
+              <div class="product-container">
+                <img src="images/brand11.png" alt="img" style="width: 100%;">
+              </div>
+              <div class="product-container">
+                <img src="images/brand12.png" alt="img" style="width: 100%;">
+              </div>
+            </div>
+        </div>
+    </div>
+    </div>
+     <div id="view-cart-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header" id="view-X">
+        <span id ='close-view-cart' class="close">&times;</span>
+        View Cart
+      </div>
+      <div class="modal-body">
+      <form name="f" class="product-form" id="view-chart-form">
+                          
+       </form>
+      </div>
+     </div>
+    </div>
+    <div class="footer">
+
+    </div>
+</body>
+<script type="text/javascript">
+document.getElementById('view-X').addEventListener('click',closeViewCartModal);
+document.querySelector(".cart-icon").addEventListener("click", viewCartModal);
+document.querySelector(".cart-number").addEventListener("click", viewCartModal);
+document.querySelector("#cart-worth").addEventListener("click", viewCartModal);
+document.querySelector("#money-symble").addEventListener("click", viewCartModal);
+document.getElementById("close-view-cart").addEventListener('click', closeViewCartModal);
+const viewCartForm = document.getElementById('view-chart-form');
+const viewModal = document.getElementById('view-cart-modal');
+window.addEventListener('click', outsideClick);
+let price= 0;
+let total = 0;
+let totalQuantity = 0;
+ if(localStorage.length>0){
+	 for(let i =0;i<localStorage.length;i++){
+		 let key = 'cart'+i.toString();
+		 myObj=JSON.parse(localStorage.getItem(key));
+		 price =  myObj.price;
+		 totalQuantity = totalQuantity +myObj.quantity;
+		 total = total + (price * myObj.quantity);
+	 }
+    document.getElementById('cart-worth').innerText = total;
+    document.getElementById('cart-number').innerText = totalQuantity;
+ }
+    var counter = 1;
+    setInterval(function(){
+      document.getElementById('radio' + counter).checked = true;
+      counter++;
+      if(counter > 4){
+        counter = 1;
+      }
+    }, 5000);
+    function getsearched(){
+    	const search = document.getElementById('search').value;
+    	fetch('/products/')
+    }
+    const logout =  document.getElementById('logout-btn');
+    if(logout != null){
+    logout.addEventListener('click',clearLocalStorage);
+    }
+    function clearLocalStorage(){
+    	localStorage.clear();
+    }
+    function viewCartModal(e){
+  	  let viewCartOutput ='';
+  	  if(localStorage.length>0){
+  		  for(let i=0;i<localStorage.length;i++){
+  			  let key = "cart"+i.toString();
+  			  let myObj = JSON.parse(localStorage.getItem(key));
+  			  let productsWorth = Math.round(Number(myObj.quantity)) *  Math.round(Number(myObj.price));
+  			  viewCartOutput += 
+  				  `<div class="cart-product-container">
+  			       <div class="cart-image-container">
+  			         <img class= "cart-img" src="${myObj.image}" style="height:160px;"/>
+  			       </div>
+  			       <div class= "cart-details">
+  			       <div class="cart-name-container">
+  			        ${myObj.name}
+  			        </div>
+  				    <div class="cart-price-container">
+  				      ${myObj.price}
+  				    </div>
+  				    <div class="cart-quantity-container">
+  				      ${myObj.quantity}
+  				    </div>
+  				    <div class="cart-total-container">
+  				      Total: &nbsp;&nbsp; ${productsWorth}
+  				    </div>
+  			       </div>
+  			       </div>`;
+  		      }
+  		  }
+	  viewCartOutput += 
+		  `<div class="form-buttons">
+          <button  id="buy-products" class="enter-btn" sec:authorize="isAuthenticated()">Buy Products</button>
+          <button id="cart-cancel" class="cancel-btn">cancel</button>
+        </div>`;
+	  viewCartForm.innerHTML = viewCartOutput;
+	  document.getElementById('buy-products').addEventListener('click',buyProducts);
+	  viewModal.style.display ='block';
+  	  }
+    function outsideClick(e) {
+        if (e.target == viewModal) {
+        	viewModal.style.display = 'none';
+        }
+      }
+    function closeViewCartModal(e){
+  	  e.preventDefault;
+  	  viewModal.style.display ='none';
+    }
+    </script>
+</html>
